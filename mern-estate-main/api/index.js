@@ -19,43 +19,38 @@ mongoose
   });
 
 const __dirname = path.resolve();
-
 const Appointment = mongoose.model('Appointment', {
   name: String,
   email: String,
   phone: String,
   date: Date,
-  duration: Number,
+  time: String,
+  propertyId: mongoose.Schema.Types.ObjectId
 });
 
 const app = express();
-
 app.use(express.json());
 
 app.post('/api/checkAvailability', async (req, res) => {
-  const { name, email, phone, selectedDate, duration } = req.body;
-
+  const { name, email, phone, selectedDate, selectedTime, propertyId } = req.body;
   try {
     const newAppointment = new Appointment({
       name,
       email,
       phone,
-      date: selectedDate,
-      duration,
+      date: new Date(selectedDate),
+      time: selectedTime,
+      propertyId
     });
     await newAppointment.save();
-
-    const startTime = new Date(selectedDate);
-    const endTime = new Date(startTime.getTime() + duration * 60000);
+    
     const overlappingAppointments = await Appointment.find({
-      _id: { $ne: newAppointment._id }, 
-      date: { $lt: endTime },
-      $or: [
-        { date: { $gte: startTime, $lt: endTime } },
-        { date: { $lt: startTime }, endDate: { $gt: startTime } },
-      ],
+      _id: { $ne: newAppointment._id },
+      propertyId,
+      date: newAppointment.date,
+      time: selectedTime
     });
-
+    
     if (overlappingAppointments.length > 0) {
       await Appointment.findByIdAndRemove(newAppointment._id);
       return res.status(409).json({ message: 'Time slot not available. Please choose another time.' });
@@ -69,7 +64,6 @@ app.post('/api/checkAvailability', async (req, res) => {
 });
 
 app.use(cookieParser());
-
 app.listen(3001, () => {
   console.log('Server is running on port 3001!');
 });
@@ -78,19 +72,9 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 
-// app.use(express.static(path.join(__dirname, '/client/dist/assets')));
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist','assets', 'index.html'));
-// });
-
 app.use((err, req, res, next) => {
   console.log(err);
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
-  return res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message,
-  });
+  return res.status(statusCode).json({ success: false, statusCode, message });
 });

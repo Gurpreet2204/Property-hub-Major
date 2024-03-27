@@ -45,7 +45,7 @@ const BudgetInvestor = () => {
 
   return (
     <div className="container mx-auto mt-8 p-4 bg-gray-100 rounded-md shadow-md max-w-md">
-      <h1 className="text-2xl font-extrabold text-blue-500 mb-4">Can I Afford a Home?</h1>
+      <h1 className="text-2xl font-extrabold text-gray-800 mb-4">Can I Afford a Home?</h1>
       <div>
         <label className="block text-sm font-semibold mb-2">Home Price (₹)</label>
         <input

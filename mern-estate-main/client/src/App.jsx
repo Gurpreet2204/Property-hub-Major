@@ -12,6 +12,7 @@ import Listing from './pages/Listing';
 import Search from './pages/Search';
 import MortgageCalculator from './pages/MortgageCalaulator';
 import BudgetInvestor from './pages/BudgetInvestor';
+import Footer from './components/Footer';
 
 export default function App() {
   return (
@@ -35,6 +36,8 @@ export default function App() {
           />
         </Route>
       </Routes>
+      <Footer />
+
     </BrowserRouter>
   );
 }

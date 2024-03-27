@@ -56,39 +56,52 @@ const MortgageCalculator = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 p-4 bg-gray-100 rounded-md shadow-md max-w-md">
+    <div className="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md max-w-md">
       <form className="max-w-md mx-auto">
         <div className="mb-4">
-          <h2 className='text-3xl font-extrabold text-blue-500'>Mortgage Calculator</h2> <br />
-          <label htmlFor="purchasePrice" className="block text-sm font-medium text-gray-600">
+          <h2 className="text-3xl font-extrabold text-gray-800-500 mb-2">Mortgage Calculator</h2>
+          <p className="text-gray-600 mb-4">
+            Calculate your estimated monthly mortgage payment with our easy-to-use calculator.
+          </p>
+          <label htmlFor="purchasePrice" className="block text-sm font-medium text-gray-700">
             Purchase Price (₹)
           </label>
           <input
             type="number"
             id="purchasePrice"
-            className={`mt-1 p-2 border rounded-md w-full ${purchasePriceError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`mt-1 p-2 border rounded-md w-full ${
+              purchasePriceError ? 'border-red-500' : 'border-gray-300'
+            }`}
             placeholder="Enter purchase price"
             value={purchasePrice}
-            onChange={(e) => { setPurchasePrice(e.target.value); clearErrors(); }}
+            onChange={(e) => {
+              setPurchasePrice(e.target.value);
+              clearErrors();
+            }}
           />
           {purchasePriceError && <p className="text-red-500 text-sm mt-1">{purchasePriceError}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="downPaymentPercentage" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="downPaymentPercentage" className="block text-sm font-medium text-gray-700">
             Down Payment Percentage (%)
           </label>
           <input
             type="number"
             id="downPaymentPercentage"
-            className={`mt-1 p-2 border rounded-md w-full ${downPaymentPercentageError ? 'border-red-500' : 'border-gray-300'}`}
+            className={`mt-1 p-2 border rounded-md w-full ${
+              downPaymentPercentageError ? 'border-red-500' : 'border-gray-300'
+            }`}
             placeholder="Enter down payment percentage"
             value={downPaymentPercentage}
-            onChange={(e) => { setDownPaymentPercentage(e.target.value); clearErrors(); }}
+            onChange={(e) => {
+              setDownPaymentPercentage(e.target.value);
+              clearErrors();
+            }}
           />
           {downPaymentPercentageError && <p className="text-red-500 text-sm mt-1">{downPaymentPercentageError}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="loanTerm" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="loanTerm" className="block text-sm font-medium text-gray-700">
             Loan Term (Years)
           </label>
           <input
@@ -97,12 +110,15 @@ const MortgageCalculator = () => {
             className={`mt-1 p-2 border rounded-md w-full ${loanTermError ? 'border-red-500' : 'border-gray-300'}`}
             placeholder="Enter loan term"
             value={loanTerm}
-            onChange={(e) => { setLoanTerm(e.target.value); clearErrors(); }}
+            onChange={(e) => {
+              setLoanTerm(e.target.value);
+              clearErrors();
+            }}
           />
           {loanTermError && <p className="text-red-500 text-sm mt-1">{loanTermError}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="interestRate" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="interestRate" className="block text-sm font-medium text-gray-700">
             Annual Interest Rate (%)
           </label>
           <input
@@ -111,19 +127,22 @@ const MortgageCalculator = () => {
             className={`mt-1 p-2 border rounded-md w-full ${interestRateError ? 'border-red-500' : 'border-gray-300'}`}
             placeholder="Enter annual interest rate"
             value={interestRate}
-            onChange={(e) => { setInterestRate(e.target.value); clearErrors(); }}
+            onChange={(e) => {
+              setInterestRate(e.target.value);
+              clearErrors();
+            }}
           />
           {interestRateError && <p className="text-red-500 text-sm mt-1">{interestRateError}</p>}
         </div>
         <button
           type="button"
-          className="bg-blue-500 font-bold text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 w-full"
           onClick={calculateMonthlyPayment}
         >
           Calculate Monthly Payment
         </button>
         {monthlyPayment && (
-          <p className="mt-4 text-green-600">
+          <p className="mt-4 text-green-600 text-lg font-semibold">
             Your estimated monthly payment is: ₹{monthlyPayment}
           </p>
         )}

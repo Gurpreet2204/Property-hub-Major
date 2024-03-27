@@ -142,7 +142,12 @@ export default function Listing() {
               </button>
             )}
             {contact && <Contact listing={listing} />}
-            <AppointmentForm />
+
+            
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <AppointmentForm/> 
+            )}
+            
           </div>
         </div>
       )}
