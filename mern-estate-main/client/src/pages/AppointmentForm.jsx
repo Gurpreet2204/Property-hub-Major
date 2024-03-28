@@ -81,6 +81,7 @@ const AppointmentForm = () => {
       </button>
       {showForm && (
         <div className="max-w-md bg-white rounded-md shadow-md p-6">
+          
           <h2 className="text-3xl text-red-900 font-semibold mb-4">Book Your Appointment</h2>
           {submitted ? (
             <p className="text-green-600">Appointment request submitted successfully!</p>
@@ -135,8 +136,11 @@ const AppointmentForm = () => {
                 >
                   Submit Appointment Request
                 </button>
+
               </center>
+
             </form>
+
           )}
         </div>
       )}

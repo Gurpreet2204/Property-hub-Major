@@ -26,6 +26,8 @@ export default function CreateListing() {
     offer: false,
     parking: false,
     furnished: false,
+    keywords: '',
+    appointmentFees: '', 
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -171,6 +173,15 @@ export default function CreateListing() {
             onChange={handleChange}
             value={formData.name}
           />
+          <input
+            type='number'
+            placeholder='Appointment Fees'
+            className='border p-3 rounded-lg'
+            id='appointmentFees'
+            required
+            onChange={handleChange}
+            value={formData.appointmentFees}
+          />
           <textarea
             type='text'
             placeholder='Description'
@@ -305,8 +316,20 @@ export default function CreateListing() {
                     <span className='text-xs'>(₹ / month)</span>
                   )}
                 </div>
+
+               
               </div>
             )}
+             <input
+            type='text'
+            placeholder='Keywords'
+            className='border p-3 rounded-lg'
+            id='keywords'
+            required
+            onChange={handleChange}
+            value={formData.keywords}
+          />
+          
           </div>
         </div>
         <div className='flex flex-col flex-1 gap-4'>

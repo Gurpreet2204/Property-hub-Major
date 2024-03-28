@@ -84,6 +84,12 @@ export const getListings = async (req, res, next) => {
       parking = { $in: [false, true] };
     }
 
+    let appointmentFees = req.query.appointmentFees;
+
+    if (appointmentFees === undefined || appointmentFees === 'false') {
+      appointmentFees = { $in: [false, true] };
+    }
+
     let type = req.query.type;
 
     if (type === undefined || type === 'all') {
@@ -102,6 +108,7 @@ export const getListings = async (req, res, next) => {
       furnished,
       parking,
       type,
+      appointmentFees,
     })
       .sort({ [sort]: order })
       .limit(limit)
