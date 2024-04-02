@@ -51,7 +51,6 @@ export default function Listing() {
 
   return (
     <main>
-    
       {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
       {error && <p className='text-center my-7 text-2xl'>Something went wrong!</p>}
       {listing && !loading && !error && (
@@ -88,8 +87,7 @@ export default function Listing() {
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
             <p className='text-2xl font-semibold'>
-              {listing.name} - ₹{' '}
-
+              {listing.name} - ${' '}
               {listing.offer
                 ? listing.discountPrice.toLocaleString('en-US')
                 : listing.regularPrice.toLocaleString('en-US')}
@@ -105,7 +103,7 @@ export default function Listing() {
               </p>
               {listing.offer && (
                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  ₹ {+listing.regularPrice - +listing.discountPrice} OFF
+                  ${+listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
             </div>
@@ -113,11 +111,7 @@ export default function Listing() {
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
             </p>
-            <p className='text-slate-800'>
-              <span className='font-semibold text-black'>Appointment Fee - ₹ </span>
-              {listing.appointmentFees}
-            </p>
-
+            
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap '>
                 <FaBed className='text-lg' />
@@ -140,6 +134,13 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+
+            
+      
+            <ul>
+
+            </ul>
+
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
@@ -149,23 +150,10 @@ export default function Listing() {
               </button>
             )}
             {contact && <Contact listing={listing} />}
-
-
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <AppointmentForm />
-            )}
-            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                type="submit"
-                className="bg-green-700 text-white py-2 px-4 rounded-md hover:opacity-95 focus:outline-none"
-              >
-                Pay the appoinment fee
-              </button>)} */}
-
+            {currentUser && listing.userRef !== currentUser._id && !contact && ( <AppointmentForm />)}
           </div>
         </div>
       )}
     </main>
 
-  )
-}
+  )}

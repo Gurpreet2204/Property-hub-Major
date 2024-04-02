@@ -89,6 +89,53 @@ export const getListings = async (req, res, next) => {
     if (appointmentFees === undefined || appointmentFees === 'false') {
       appointmentFees = { $in: [false, true] };
     }
+    let villa = req.query.villa;
+
+    if (villa === undefined || villa === 'false') {
+      villa = { $in: [false, true] };
+    }
+
+    let keywords = req.query.keywords;
+
+    if (keywords === undefined || keywords === 'false') {
+      keywords = { $in: [false, true] };
+    }
+
+    let bunglow = req.query.bunglow;
+
+    if (bunglow === undefined || bunglow === 'false') {
+      bunglow = { $in: [false, true] };
+    }
+
+    let appartment = req.query.appartment;
+
+    if (appartment === undefined || appartment === 'false') {
+      appartment = { $in: [false, true] };
+    }
+
+    let tounHouse = req.query.tounHouse;
+
+    if (tounHouse === undefined || tounHouse === 'false') {
+      tounHouse = { $in: [false, true] };
+    }
+
+    let condominium = req.query.condominium;
+
+    if (condominium === undefined || condominium === 'false') {
+      condominium = { $in: [false, true] };
+    }
+
+    let delux = req.query.delux;
+
+    if (delux === undefined || delux === 'false') {
+      delux = { $in: [false, true] };
+    }
+    
+    let other = req.query.other;
+
+    if (other === undefined || other === 'false') {
+      other = { $in: [false, true] };
+    }
 
     let type = req.query.type;
 
@@ -108,6 +155,14 @@ export const getListings = async (req, res, next) => {
       furnished,
       parking,
       type,
+      keywords,
+      villa,
+      bunglow,
+      appartment,
+      tounHouse,
+      condominium,
+      delux,
+      other,
       appointmentFees,
     })
       .sort({ [sort]: order })

@@ -27,7 +27,7 @@ export default function CreateListing() {
     parking: false,
     furnished: false,
     keywords: '',
-    appointmentFees: '', 
+    appointmentFees: '',
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -192,6 +192,15 @@ export default function CreateListing() {
             value={formData.description}
           />
           <input
+              type='text'
+              placeholder='Keywords'
+              className='border p-3 rounded-lg'
+              id='keywords'
+              required
+              onChange={handleChange}
+              value={formData.keywords}
+            />
+          <input
             type='text'
             placeholder='Address'
             className='border p-3 rounded-lg'
@@ -200,6 +209,7 @@ export default function CreateListing() {
             onChange={handleChange}
             value={formData.address}
           />
+
           <div className='flex gap-6 flex-wrap'>
             <div className='flex gap-2'>
               <input
@@ -241,17 +251,92 @@ export default function CreateListing() {
               />
               <span>Furnished</span>
             </div>
+
+            <div className='flex gap-2'>
+              <b> Select here a Property Type :-</b>
+              {/* <input
+                type='checkbox'
+                id='Villa'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.villa}
+              />
+              <span>Villa</span> */}
+            </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='offer'
+                id='Bunglow'
                 className='w-5'
                 onChange={handleChange}
-                checked={formData.offer}
+                checked={formData.Bunglow}
               />
-              <span>Offer</span>
+              <span>Bunglow</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='Appartment'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.Appartment}
+              />
+              <span>Appartment</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='Townhouse'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.Tounhouse}
+              />
+              <span>Townhouse</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='Condominium'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.Condominium}
+              />
+              <span>Condominium</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='Duplex'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.Duplex}
+              />
+              <span>Duplex</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='Other'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.Other}
+              />
+              <span>Other</span>
             </div>
           </div>
+
+
+          <div className='flex gap-2'>
+            <input
+              type='checkbox'
+              id='offer'
+              className='w-5'
+              onChange={handleChange}
+              checked={formData.offer}
+            />
+            <span>Offer</span>
+          </div>
+
           <div className='flex flex-wrap gap-6'>
             <div className='flex items-center gap-2'>
               <input
@@ -317,19 +402,11 @@ export default function CreateListing() {
                   )}
                 </div>
 
-               
+
               </div>
             )}
-             <input
-            type='text'
-            placeholder='Keywords'
-            className='border p-3 rounded-lg'
-            id='keywords'
-            required
-            onChange={handleChange}
-            value={formData.keywords}
-          />
-          
+            
+
           </div>
         </div>
         <div className='flex flex-col flex-1 gap-4'>

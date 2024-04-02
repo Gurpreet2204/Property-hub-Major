@@ -44,11 +44,36 @@ const listingSchema = new mongoose.Schema(
     },
     offer: {
       type: Boolean,
-      required: true,
+      // required: true,
     },
     appointmentFees:{
       type:Number,
       required:true,
+    },
+    keywords:{
+      type:String,
+      required:true
+    },
+    villa:{
+      type:String,
+    },
+    bunglow:{
+      type:String,
+    },
+    appartment:{
+      type:String,
+    },
+    tounHouse:{
+      type:String,
+    },
+    condominum:{
+      type:String,
+    },
+    duplex:{
+      type:String,
+    },
+    other:{
+      type:String,
     },
     imageUrls: {
       type: Array,
