@@ -137,7 +137,7 @@ const AppointmentForm = () => {
                   Submit Appointment Request
                 </button>
 
-              </center>
+              </center>  
 
             </form>
 

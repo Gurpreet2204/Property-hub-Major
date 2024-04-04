@@ -43,8 +43,8 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
     offer: {
-      type: Boolean,
-      // required: true,
+      type: String,
+      required: true,
     },
     appointmentFees:{
       type:Number,

@@ -60,6 +60,7 @@ export const getListing = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
 };
 
 export const getListings = async (req, res, next) => {
@@ -151,19 +152,10 @@ export const getListings = async (req, res, next) => {
 
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
-      offer,
       furnished,
       parking,
       type,
-      keywords,
-      villa,
-      bunglow,
-      appartment,
-      tounHouse,
-      condominium,
-      delux,
-      other,
-      appointmentFees,
+      
     })
       .sort({ [sort]: order })
       .limit(limit)
@@ -174,3 +166,5 @@ export const getListings = async (req, res, next) => {
     next(error);
   }
 };
+
+  console.log(getListings)

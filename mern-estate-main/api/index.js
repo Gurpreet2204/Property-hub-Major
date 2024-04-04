@@ -72,6 +72,7 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 
+
 app.use((err, req, res, next) => {
   console.log(err);
   const statusCode = err.statusCode || 500;

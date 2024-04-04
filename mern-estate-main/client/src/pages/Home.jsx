@@ -5,7 +5,7 @@ import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
-
+import axios from 'axios';
 SwiperCore.use([Navigation]);
 
 const Home = () => {
@@ -13,12 +13,14 @@ const Home = () => {
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
 
+  
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
         const res = await fetch('/api/listing/get?offer=true&limit=4');
         const data = await res.json();
         setOfferListings(data);
+        console.log(data)
         fetchRentListings();
       } catch (error) {
         console.log(error);
@@ -31,11 +33,13 @@ const Home = () => {
         const data = await res.json();
         setRentListings(data);
         fetchSaleListings();
+        console.log(data)
+        console.log(res)
       } catch (error) {
         console.log(error);
       }
     };
-
+    console.log(fetchRentListings)
     const fetchSaleListings = async () => {
       try {
         const res = await fetch('/api/listing/get?type=sale&limit=4');
@@ -50,6 +54,7 @@ const Home = () => {
   }, []);
 
   return (
+  
     <div>
       <div className="w-full">
         <Swiper navigation>

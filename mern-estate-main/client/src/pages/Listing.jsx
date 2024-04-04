@@ -134,9 +134,6 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-
-            
-      
             <ul>
 
             </ul>
@@ -151,6 +148,17 @@ export default function Listing() {
             )}
             {contact && <Contact listing={listing} />}
             {currentUser && listing.userRef !== currentUser._id && !contact && ( <AppointmentForm />)}
+
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <AppointmentForm />
+            )}
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                type="submit"
+                className="bg-green-700 text-white py-2 px-4 rounded-md hover:opacity-95 focus:outline-none"
+              >
+                Pay the appoinment fee
+              </button>)}
           </div>
         </div>
       )}
