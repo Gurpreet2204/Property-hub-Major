@@ -27,19 +27,19 @@ export default function Header() {
 
   return (
     <header className="bg-gray-900 text-white py-4">
-      <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
-        <Link to='/' className='text-blue-800 font-extrabold text-lg sm:text-2xl flex items-center'>
+      <div className='flex flex-wrap justify-between items-center max-w-6xl mx-auto p-3'>
+        <Link to='/' className='text-blue-800 font-extrabold text-lg sm:text-2xl flex items-center w-full sm:w-auto'>
           <span>Property</span>
           <span className='text-red-600'>Hub</span>
         </Link>
         <form
           onSubmit={handleSubmit}
-          className='bg-gray-100 p-2 rounded-lg flex items-center'
+          className='bg-gray-100 p-2 rounded-lg flex items-center w-full mt-4 sm:mt-0 sm:w-auto'
         >
           <input
             type='search'
             placeholder='Search...'
-            className='bg-transparent text-gray-800 focus:outline-none w-24 sm:w-64 px-2'
+            className='bg-transparent text-gray-800 focus:outline-none w-full px-2'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -47,8 +47,8 @@ export default function Header() {
             <FaSearch />
           </button>
         </form>
-        <nav>
-          <ul className='flex gap-4 text-white'>
+        <nav className='mt-4 sm:mt-0'>
+          <ul className='flex flex-wrap gap-4 text-white justify-center sm:justify-end w-full sm:w-auto'>
             <li className='hover:text-blue-800 transition duration-300'>
               <Link to='/'>Home</Link>
             </li>
