@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
 import AppointmentForm from './AppointmentForm';
-import Payment from './payment';
+// import Payment from './payment';
 
 SwiperCore.use([Navigation]);
 
@@ -181,13 +181,13 @@ export default function Listing() {
             {currentUser && listing.userRef !== currentUser._id && !contact && (<AppointmentForm />)}
             <br />
             
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 type="submit"
                 className="bg-green-700 text-white py-2 px-4 rounded-md hover:opacity-95 focus:outline-none"
               >
                 <Payment />
-              </button>)}
+              </button>)} */}
 
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
