@@ -256,16 +256,8 @@ export default function CreateListing() {
               />
               <span>Furnished</span>
             </div>
-            <div className='flex gap-2'>
-              <input
-                type='checkbox'
-                id='offer'
-                className='w-5'
-                onChange={handleChange}
-                checked={formData.offer}
-              />
-              <span>Offer</span>
-            </div>
+            
+            <span> <b>Select here a property type :-</b></span>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
@@ -347,8 +339,18 @@ export default function CreateListing() {
               />
               <span>Other</span>
             </div>
-
+            
           </div>
+          <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='offer'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.offer}
+              />
+              <span>Offer</span>
+            </div>
           <div className='flex flex-wrap gap-6'>
             <div className='flex items-center gap-2'>
               <input
