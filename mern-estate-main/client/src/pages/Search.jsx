@@ -91,6 +91,22 @@ export default function Search() {
       });
     }
 
+    if (
+      e.target.id === 'villa' ||
+      e.target.id === 'bunglow' ||
+      e.target.id === 'apartment'||
+      e.target.id === 'condominum'||
+      e.target.id === 'duplex'||
+      e.target.id === 'triplex'||
+      e.target.id === 'other'
+    ) {
+      setSidebardata({
+        ...sidebardata,
+        [e.target.id]:
+          e.target.checked || e.target.checked === 'true' ? true : false,
+      });
+    }
+
     if (e.target.id === 'sort_order') {
       const sort = e.target.value.split('_')[0] || 'created_at';
 
@@ -105,7 +121,6 @@ export default function Search() {
     const urlParams = new URLSearchParams();
     urlParams.set('searchTerm', sidebardata.searchTerm);
     urlParams.set('type', sidebardata.type);
-    urlParams.set('parking', sidebardata.parking);
     urlParams.set('furnished', sidebardata.furnished);
     urlParams.set('offer', sidebardata.offer);
     urlParams.set('sort', sidebardata.sort);

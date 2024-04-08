@@ -15,6 +15,7 @@ import {
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
 import AppointmentForm from './AppointmentForm';
+import Payment from './payment';
 
 SwiperCore.use([Navigation]);
 
@@ -87,7 +88,7 @@ export default function Listing() {
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
             <p className='text-2xl font-semibold'>
-              {listing.name} - ${' '}
+              {listing.name} - ₹{' '}
               {listing.offer
                 ? listing.discountPrice.toLocaleString('en-US')
                 : listing.regularPrice.toLocaleString('en-US')}
@@ -103,7 +104,7 @@ export default function Listing() {
               </p>
               {listing.offer && (
                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  ${+listing.regularPrice - +listing.discountPrice} OFF
+                  ₹{listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
             </div>
@@ -111,7 +112,7 @@ export default function Listing() {
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
             </p>
-            
+
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap '>
                 <FaBed className='text-lg' />
@@ -133,10 +134,60 @@ export default function Listing() {
                 <FaChair className='text-lg' />
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
+
+
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.villa ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.villa ? 'Villa' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.bunglow ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.bunglow ? 'bunglow' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.townhouse ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.townhouse ? 'townhouse' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.appartment ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.appartment ? 'appartment' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.condominum ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.condominum ? 'condominum' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.duplex ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.duplex ? 'duplex' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.triplex ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.triplex ? 'triplex' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.other ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.other ? 'other' : ' '}
+              </li>
             </ul>
             <ul>
 
             </ul>
+            <p className='text-slate-800'>
+              <span className='font-semibold text-red-500'>Fee for the Appointment - ₹<b>{listing.appointmentFees} </b></span>
+
+            </p>
+            <br />
+            {contact && <Contact listing={listing} />}
+            {currentUser && listing.userRef !== currentUser._id && !contact && (<AppointmentForm />)}
+            <br />
+            
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                type="submit"
+                className="bg-green-700 text-white py-2 px-4 rounded-md hover:opacity-95 focus:outline-none"
+              >
+                <Payment />
+              </button>)}
 
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
@@ -146,22 +197,14 @@ export default function Listing() {
                 Contact landlord
               </button>
             )}
-            {contact && <Contact listing={listing} />}
-            {currentUser && listing.userRef !== currentUser._id && !contact && ( <AppointmentForm />)}
+            <br />
 
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <AppointmentForm />
-            )}
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                type="submit"
-                className="bg-green-700 text-white py-2 px-4 rounded-md hover:opacity-95 focus:outline-none"
-              >
-                Pay the appoinment fee
-              </button>)}
+
+
           </div>
         </div>
       )}
     </main>
 
-  )}
+  )
+}

@@ -43,7 +43,7 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
     offer: {
-      type: String,
+      type: Boolean,
       required: true,
     },
     appointmentFees:{
@@ -55,25 +55,28 @@ const listingSchema = new mongoose.Schema(
       required:true
     },
     villa:{
-      type:String,
+      type:Boolean,
     },
     bunglow:{
-      type:String,
+      type:Boolean,
     },
     appartment:{
-      type:String,
+      type:Boolean,
     },
     tounHouse:{
-      type:String,
+      type:Boolean,
     },
     condominum:{
-      type:String,
+      type:Boolean,
     },
     duplex:{
-      type:String,
+      type:Boolean,
+    },
+    triplex:{
+      type:Boolean
     },
     other:{
-      type:String,
+      type:Boolean,
     },
     imageUrls: {
       type: Array,

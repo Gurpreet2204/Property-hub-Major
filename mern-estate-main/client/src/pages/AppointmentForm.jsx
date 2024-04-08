@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Contact from '../components/Contact';
 
 const AppointmentForm = () => {
   const [name, setName] = useState('');

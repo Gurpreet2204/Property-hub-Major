@@ -19,21 +19,30 @@ export default function CreateListing() {
     description: '',
     address: '',
     type: 'rent',
-    bedrooms: 1,
+    bedrooms: 2,
     bathrooms: 1,
-    regularPrice: 50,
+    regularPrice: 15000,
     discountPrice: 0,
     offer: false,
     parking: false,
     furnished: false,
     keywords: '',
     appointmentFees: '',
+    villa: false,
+    bunglow: false,
+    appartment: false,
+    townhouse: false,
+    condominum: false,
+    duplex: false,
+    triplex: false,
+    other: false
   });
   const [imageUploadError, setImageUploadError] = useState(false);
+
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  console.log(formData);
+
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -105,7 +114,15 @@ export default function CreateListing() {
     if (
       e.target.id === 'parking' ||
       e.target.id === 'furnished' ||
-      e.target.id === 'offer'
+      e.target.id === 'offer'||
+      e.target.id === 'villa'||
+      e.target.id === 'bunglow'||
+      e.target.id === 'appartment'||
+      e.target.id === 'townhouse'||
+      e.target.id === 'condominum'||
+      e.target.id === 'duplex'||
+      e.target.id === 'triplex'||
+      e.target.id === 'other'
     ) {
       setFormData({
         ...formData,
@@ -192,14 +209,14 @@ export default function CreateListing() {
             value={formData.description}
           />
           <input
-              type='text'
-              placeholder='Keywords'
-              className='border p-3 rounded-lg'
-              id='keywords'
-              required
-              onChange={handleChange}
-              value={formData.keywords}
-            />
+            type='text'
+            placeholder='Keywords'
+            className='border p-3 rounded-lg'
+            id='keywords'
+            required
+            onChange={handleChange}
+            value={formData.keywords}
+          />
           <input
             type='text'
             placeholder='Address'
@@ -254,69 +271,81 @@ export default function CreateListing() {
 
             <div className='flex gap-2'>
               <b> Select here a Property Type :-</b>
-              {/* <input
+              <input
                 type='checkbox'
-                id='Villa'
+                id='villa'
                 className='w-5'
                 onChange={handleChange}
                 checked={formData.villa}
               />
-              <span>Villa</span> */}
+              <span>Villa</span>
             </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='Bunglow'
+                id='bunglow'
                 className='w-5'
                 onChange={handleChange}
                 checked={formData.Bunglow}
               />
               <span>Bunglow</span>
             </div>
+
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='Appartment'
+                id='appartment'
                 className='w-5'
                 onChange={handleChange}
-                checked={formData.Appartment}
+                checked={formData.appartment}
               />
               <span>Appartment</span>
             </div>
+
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='Townhouse'
+                id='townhouse'
                 className='w-5'
                 onChange={handleChange}
-                checked={formData.Tounhouse}
+                checked={formData.townhouse}
               />
               <span>Townhouse</span>
             </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='Condominium'
+                id='condominum'
                 className='w-5'
                 onChange={handleChange}
-                checked={formData.Condominium}
+                checked={formData.Condominum}
               />
               <span>Condominium</span>
             </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='Duplex'
+                id='duplex'
                 className='w-5'
                 onChange={handleChange}
-                checked={formData.Duplex}
+                checked={formData.duplex}
               />
               <span>Duplex</span>
             </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='Other'
+                id='triplex'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.triplex}
+              />
+              <span>Triplex</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='other'
                 className='w-5'
                 onChange={handleChange}
                 checked={formData.Other}
@@ -405,7 +434,7 @@ export default function CreateListing() {
 
               </div>
             )}
-            
+
 
           </div>
         </div>
