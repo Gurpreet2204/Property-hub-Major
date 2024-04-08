@@ -27,6 +27,16 @@ export default function CreateListing() {
     offer: false,
     parking: false,
     furnished: false,
+    keywords: '',
+    appointmentFees: '',
+    villa: false,
+    bunglow: false,
+    appartment: false,
+    townhouse: false,
+    condominum: false,
+    duplex: false,
+    triplex: false,
+    other: false
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -256,6 +266,88 @@ export default function CreateListing() {
               />
               <span>Offer</span>
             </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='villa'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.villa}
+              />
+              <span>Villa</span>
+            </div>
+             <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='bunglow'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.bunglow}
+              />
+              <span>Bunglow</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='townhouse'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.townhouse}
+              />
+              <span>Townhouse</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='appartment'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.appartment}
+              />
+              <span>Appartment</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='condominum'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.condominum}
+              />
+              <span>Condominum</span>
+            </div>
+            
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='duplex'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.duplex}
+              />
+              <span>Duplex</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='triplex'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.triplex}
+              />
+              <span>Triplex</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='other'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.other}
+              />
+              <span>Other</span>
+            </div>
+
           </div>
           <div className='flex flex-wrap gap-6'>
             <div className='flex items-center gap-2'>
