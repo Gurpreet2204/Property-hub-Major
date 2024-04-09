@@ -15,11 +15,10 @@ import cors from 'cors'
 const app = express();
 
 // Apply CORS middleware
-app.use(cors({
-  origin: 'http://localhost:5173'}));
+app.use(cors());
 
 app.use(express.json());
-app.post("/api/order", async (req, res) => {
+app.post("/order", async (req, res) => {
   try {
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,

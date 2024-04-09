@@ -57,7 +57,7 @@ export default function Listing() {
     const reciptId = "123456789";
 
     // try {
-    const response = await fetch("http://localhost:3000/api/order", {
+    const response = await fetch("http://localhost:3000/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
