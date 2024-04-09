@@ -8,10 +8,8 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import Razorpay from "razorpay";
 dotenv.config();
-// import crypto from 'crypto'
 import cors from 'cors'
-// const cors = require('cors')
-// const crypto = require("crypto");
+
 const app = express();
 
 // Apply CORS middleware
@@ -99,7 +97,7 @@ app.post("/api/checkAvailability", async (req, res) => {
 });
 
 app.use(cookieParser());
-app.listen(5000, () => {
+app.listen(3000, () => {
   console.log("Server is running on port 3000!");
 });
 
