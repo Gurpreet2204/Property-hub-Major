@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
 import AppointmentForm from './AppointmentForm';
-// import Payment from './payment';
+
 
 SwiperCore.use([Navigation]);
 
@@ -49,6 +49,35 @@ export default function Listing() {
     };
     fetchListing();
   }, [params.listingId]);
+
+// creating payment method
+const PaymentHandler = async (event) => {
+  const amount = listing.appointmentFees;
+  const currency = 'INR';
+  const reciptId = "123456789";
+  
+  try {
+    const response = await fetch("http://localhost:3000/api/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        amount,
+        currency,
+        reciptId
+      })
+    });
+
+    const order = await response.json();
+    console.log(order); 
+    
+    
+  } catch (error) {
+    console.error('Error while processing payment:', error);
+    
+  }
+};
 
   return (
     <main>
@@ -177,27 +206,26 @@ export default function Listing() {
 
             </p>
             <br />
+            <div className='flex space-x-20'>
             {contact && <Contact listing={listing} />}
             {currentUser && listing.userRef !== currentUser._id && !contact && (<AppointmentForm />)}
-            <br />
             
-            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                type="submit"
-                className="bg-green-700 text-white py-2 px-4 rounded-md hover:opacity-95 focus:outline-none"
-              >
-                <Payment />
-              </button>)} */}
-
             {currentUser && listing.userRef !== currentUser._id && !contact && (
+               <button onClick={PaymentHandler} className='text-slate-800'>
+              <span className='bg-blue-500 text-white rounded-lg Shover:opacity-95 p-3'>Pay the AppointmentFee - ₹<b>{listing.appointmentFees} </b></span>
+
+            </button>)}
+            </div>
+            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
                 className='bg-green-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
               >
                 Contact landlord
               </button>
-            )}
-            <br />
+            )} */}
+          
+         
 
 
 

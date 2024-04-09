@@ -76,7 +76,7 @@ const AppointmentForm = () => {
     <div className="flex space-x-4">
       <button
         onClick={() => setShowForm(!showForm)}
-        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-500 focus:outline-none"
+        className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-500 focus:outline-none"
       >
         {showForm ? 'Close Form' : 'Book Your Appointment'}
       </button>

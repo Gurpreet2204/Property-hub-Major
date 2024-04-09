@@ -166,5 +166,3 @@ export const getListings = async (req, res, next) => {
     next(error);
   }
 };
-
-  console.log(getListings)

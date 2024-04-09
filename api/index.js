@@ -6,9 +6,43 @@ import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
-
+import Razorpay from "razorpay";
 dotenv.config();
+// import crypto from 'crypto'
+import cors from 'cors'
+// const cors = require('cors')
+// const crypto = require("crypto");
+const app = express();
 
+// Apply CORS middleware
+app.use(cors({
+  origin: 'http://localhost:5173'}));
+
+app.use(express.json());
+app.post("/api/order", async (req, res) => {
+  try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_SECRET,
+    });
+
+    if (!req.body) {
+      return res.status(400).send("Bad request");
+    }
+
+    const options = req.body;
+    const order = await razorpay.orders.create(options);
+
+    if (!order) {
+      return res.status(400).send("Bad request");
+    }
+
+    return res.json(order); 
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error); 
+  }
+});
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -28,8 +62,7 @@ const Appointment = mongoose.model("Appointment", {
   propertyId: mongoose.Schema.Types.ObjectId,
 });
 
-const app = express();
-app.use(express.json());
+
 
 app.post("/api/checkAvailability", async (req, res) => {
   const { name, email, phone, selectedDate, selectedTime, propertyId } =
@@ -54,11 +87,9 @@ app.post("/api/checkAvailability", async (req, res) => {
 
     if (overlappingAppointments.length > 0) {
       await Appointment.findByIdAndRemove(newAppointment._id);
-      return res
-        .status(409)
-        .json({
-          message: "Time slot not available. Please choose another time.",
-        });
+      return res.status(409).json({
+        message: "Time slot not available. Please choose another time.",
+      });
     }
 
     return res.status(200).json({ message: "Time slot is available." });
@@ -69,8 +100,8 @@ app.post("/api/checkAvailability", async (req, res) => {
 });
 
 app.use(cookieParser());
-app.listen(3001, () => {
-  console.log("Server is running on port 3001!");
+app.listen(5000, () => {
+  console.log("Server is running on port 3000!");
 });
 
 app.use("/api/user", userRouter);
@@ -79,9 +110,7 @@ app.use("/api/listing", listingRouter);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
-
-      res.sendFile(path.join(__dirname, 'client', 'dist','index.html' ))
-
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 app.use((err, req, res, next) => {
   console.log(err);
