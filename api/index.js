@@ -7,39 +7,38 @@ import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import Razorpay from "razorpay";
+// const Ordermodel = require("./models/order.model.js")
 dotenv.config();
-import cors from 'cors'
 
 const app = express();
 
-// Apply CORS middleware
-app.use(cors());
-
 app.use(express.json());
-app.post("/order", async (req, res) => {
-  try {
-    const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_SECRET,
-    });
 
-    if (!req.body) {
-      return res.status(400).send("Bad request");
-    }
+// export const instance = new Razorpay({
+//   Key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_SECRET,
+// });
 
-    const options = req.body;
-    const order = await razorpay.orders.create(options);
+// app.get("/payment/checkout",async (req,res)=>{
+// const {name,appointmentFees}=req.body
+// const order= await Razorpay.orders.create({
+//   amount:Number((amount)*100),
+//   currency:"INR",
+//   receipt:"order_rectid_11"
+// })
 
-    if (!order) {
-      return res.status(400).send("Bad request");
-    }
+// await Ordermodel.create({
+//   order_id:order.id,
+//   name:name,
+//   amount:amount
+// })
+// console.log(order)
+// res.json(order)
+// })
 
-    return res.json(order); 
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send(error); 
-  }
-});
+
+
+
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -58,8 +57,6 @@ const Appointment = mongoose.model("Appointment", {
   time: String,
   propertyId: mongoose.Schema.Types.ObjectId,
 });
-
-
 
 app.post("/api/checkAvailability", async (req, res) => {
   const { name, email, phone, selectedDate, selectedTime, propertyId } =
@@ -97,7 +94,7 @@ app.post("/api/checkAvailability", async (req, res) => {
 });
 
 app.use(cookieParser());
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server is running on port 3000!");
 });
 
@@ -116,5 +113,3 @@ app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
-
-

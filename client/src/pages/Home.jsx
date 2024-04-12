@@ -13,20 +13,25 @@ const Home = () => {
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
 
-  
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?offer=true&limit=4');
+        const res = await fetch('/api/listing/get?offer=true&limit=4', {
+          method: "GET", // Corrected method from POST to GET
+          headers: {
+            "Content-Type": "application/json"
+          },
+          // No need for body in GET request
+        });
         const data = await res.json();
         setOfferListings(data);
-        console.log(data)
+        console.log(data);
         fetchRentListings();
       } catch (error) {
         console.log(error);
       }
     };
-
+  
     const fetchRentListings = async () => {
       try {
         const res = await fetch('/api/listing/get?type=rent&limit=4');

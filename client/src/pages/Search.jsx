@@ -9,7 +9,16 @@ export default function Search() {
     type: 'all',
     parking: false,
     furnished: false,
+    keywords:" ",
     offer: false,
+    villa:false,
+    bunglow:false,
+    appartment:false,
+    townhouse:false,
+    condominum:false,
+    duplex:false,
+    triplex:false,
+    other:false,
     sort: 'created_at',
     order: 'desc',
   });
@@ -24,6 +33,15 @@ export default function Search() {
     const typeFromUrl = urlParams.get('type');
     const parkingFromUrl = urlParams.get('parking');
     const furnishedFromUrl = urlParams.get('furnished');
+    const keywordsFromUrl = urlParams.get('keywords');
+    const villaFromUrl = urlParams.get('villa');
+    const bunglowFromUrl = urlParams.get('bunglow');
+    const appartmentFromUrl = urlParams.get('appartment');
+    const townhouseFromUrl = urlParams.get('townhouse');
+    const condomiumFromUrl = urlParams.get('condomium');
+    const duplexFromUrl = urlParams.get('duplex');
+    const triplexFromUrl = urlParams.get('triplex');
+    const otherFromUrl = urlParams.get('other');
     const offerFromUrl = urlParams.get('offer');
     const sortFromUrl = urlParams.get('sort');
     const orderFromUrl = urlParams.get('order');
@@ -33,6 +51,15 @@ export default function Search() {
       typeFromUrl ||
       parkingFromUrl ||
       furnishedFromUrl ||
+      keywordsFromUrl||
+      villaFromUrl ||
+      bunglowFromUrl ||
+      appartmentFromUrl ||
+      townhouseFromUrl ||
+      condomiumFromUrl ||
+      duplexFromUrl ||
+      triplexFromUrl ||
+      otherFromUrl ||
       offerFromUrl ||
       sortFromUrl ||
       orderFromUrl
@@ -42,6 +69,15 @@ export default function Search() {
         type: typeFromUrl || 'all',
         parking: parkingFromUrl === 'true' ? true : false,
         furnished: furnishedFromUrl === 'true' ? true : false,
+        furnished: villaFromUrl === 'true' ? true : false,
+        keywords:keywordsFromUrl===' ',
+        furnished: bunglowFromUrl === 'true' ? true : false,
+        furnished: appartmentFromUrl === 'true' ? true : false,
+        furnished: townhouseFromUrl === 'true' ? true : false,
+        furnished: condomiumFromUrl === 'true' ? true : false,
+        furnished: duplexFromUrl === 'true' ? true : false,
+        furnished: triplexFromUrl === 'true' ? true : false,
+        furnished: otherFromUrl === 'true' ? true : false,
         offer: offerFromUrl === 'true' ? true : false,
         sort: sortFromUrl || 'created_at',
         order: orderFromUrl || 'desc',
@@ -70,7 +106,9 @@ export default function Search() {
     if (
       e.target.id === 'all' ||
       e.target.id === 'rent' ||
-      e.target.id === 'sale'
+      e.target.id === 'sale'||
+      e.target.id === 'keywords'
+
     ) {
       setSidebardata({ ...sidebardata, type: e.target.id });
     }
@@ -82,6 +120,15 @@ export default function Search() {
     if (
       e.target.id === 'parking' ||
       e.target.id === 'furnished' ||
+      e.target.id === 'villa' ||
+      e.target.id === 'keywords' ||
+      e.target.id === 'bunglow' ||
+      e.target.id === 'townhouse'||
+      e.target.id === 'apartment'||
+      e.target.id === 'condominum'||
+      e.target.id === 'duplex'||
+      e.target.id === 'triplex'||
+      e.target.id === 'other'||
       e.target.id === 'offer'
     ) {
       setSidebardata({
@@ -91,21 +138,7 @@ export default function Search() {
       });
     }
 
-    if (
-      e.target.id === 'villa' ||
-      e.target.id === 'bunglow' ||
-      e.target.id === 'apartment'||
-      e.target.id === 'condominum'||
-      e.target.id === 'duplex'||
-      e.target.id === 'triplex'||
-      e.target.id === 'other'
-    ) {
-      setSidebardata({
-        ...sidebardata,
-        [e.target.id]:
-          e.target.checked || e.target.checked === 'true' ? true : false,
-      });
-    }
+    
 
     if (e.target.id === 'sort_order') {
       const sort = e.target.value.split('_')[0] || 'created_at';
@@ -122,6 +155,14 @@ export default function Search() {
     urlParams.set('searchTerm', sidebardata.searchTerm);
     urlParams.set('type', sidebardata.type);
     urlParams.set('furnished', sidebardata.furnished);
+    urlParams.set('villa', sidebardata.villa);
+    urlParams.set('bunglow', sidebardata.bunglow);
+    urlParams.set('appartment', sidebardata.appartment);
+    urlParams.set('townhouse', sidebardata.townhouse);
+    urlParams.set('condomium', sidebardata.condominum);
+    urlParams.set('duplex', sidebardata.duplex);
+    urlParams.set('triplex', sidebardata.triplex);
+    urlParams.set('other', sidebardata.other);
     urlParams.set('offer', sidebardata.offer);
     urlParams.set('sort', sidebardata.sort);
     urlParams.set('order', sidebardata.order);
@@ -202,7 +243,7 @@ export default function Search() {
               <span>Offer</span>
             </div>
           </div>
-          <div className='flex gap-2 flex-wrap items-center'>
+            <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-semibold'>Amenities:</label>
             <div className='flex gap-2'>
               <input
@@ -224,6 +265,95 @@ export default function Search() {
               />
               <span>Furnished</span>
             </div>
+            </div>
+            
+            <div className='flex gap-2 flex-wrap items-center'>
+            <label className='font-semibold'>Property types</label>
+           
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='villa'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.villa}
+              />
+              <span>villa</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='bunglow'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.bunglow}
+              />
+              <span>bunglow</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='appartment'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.appartment}
+              />
+              <span>appartment</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='townhouse'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.townhouse}
+              />
+              <span>townhouse</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='condominum'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.condominum}
+              />
+              <span>condominum</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='duplex'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.duplex}
+              />  
+              <span>duplex</span>
+            </div>
+            </div>
+            <div className='flex gap-2 flex-wrap items-center'>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='triplex'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.triplex}
+              />
+              <span>triplex</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='other'
+                className='w-5'
+                onChange={handleChange}
+                checked={sidebardata.other}
+              />
+              <span>other</span>
+            </div>
+
+            
           </div>
           <div className='flex items-center gap-2'>
             <label className='font-semibold'>Sort:</label>

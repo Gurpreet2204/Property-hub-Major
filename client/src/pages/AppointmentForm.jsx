@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Contact from '../components/Contact';
+import { useSelector } from 'react-redux';
+
+import { useParams } from 'react-router-dom';
 
 const AppointmentForm = () => {
   const [name, setName] = useState('');
@@ -11,6 +14,14 @@ const AppointmentForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [appointments, setAppointments] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [listing, setListing] = useState(" ");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
+  const params = useParams();
+  const { currentUser } = useSelector((state) => state.user);
+
 
   const checkAvailability = async () => {
     try {
@@ -71,8 +82,32 @@ const AppointmentForm = () => {
     setSelectedDate(null);
     setSubmitted(true);
   };
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/listing/get/${params.listingId}`);
+        const data = await res.json();
+        if (data.success === false) {
+          setError(true);
+          setLoading(false);
+          return;
+        }
+        setListing(data);
+        setLoading(false);
+        setError(false);
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+      }
+    };
+    fetchListing();
+  }, [params.listingId]);
 
   return (
+
+
+    
     <div className="flex space-x-4">
       <button
         onClick={() => setShowForm(!showForm)}
@@ -85,7 +120,11 @@ const AppointmentForm = () => {
           
           <h2 className="text-3xl text-red-900 font-semibold mb-4">Book Your Appointment</h2>
           {submitted ? (
-            <p className="text-green-600">Appointment request submitted successfully!</p>
+            
+            <button className='text-slate-800'> 
+            <span className='bg-blue-500 text-white rounded-lg Shover:opacity-95 p-3'>Pay the AppointmentFee <b>₹ {listing.appointmentFees} </b></span>
+
+          </button> 
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <label className="block">

@@ -28,6 +28,17 @@ export default function Listing() {
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
+
+  // const CheckoutHandler = async (name, amount) => {
+  //   const { data: { order } } = await fetch.post("http://localhost:3001", {
+  //     name,
+  //     amount
+  //   })
+  //   console.log({ order })
+  // }
+
+
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -50,60 +61,6 @@ export default function Listing() {
     fetchListing();
   }, [params.listingId]);
 
-  // creating payment method
-  const PaymentHandler = async (event) => {
-    const amount = (listing.appointmentFees) * 100;
-    const currency = 'INR';
-    const reciptId = "123456789";
-
-    // try {
-    const response = await fetch("http://localhost:3000/order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        amount,
-        currency,
-        reciptId: reciptId
-      })
-    });
-
-    const order = await response.json();
-    console.log('order', order);
-
-
-    var option = {
-      key: "",
-      amount,
-      currency,
-      name: "propertyhub",
-      description: "Test connection",
-      image: "https://imgs.search.brave.com/v8xCpFZeCUKXzGdHNH71INg8iYNUJE4vce2qgSCULH4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by8zZC1yZW5kZXJp/bmctdXNlci1hY2Nv/dW50LXByb3RlY3Rp/b24tb25saW5lLXBh/eW1lbnRzLWJhbmtp/bmctc2VjdXJlXzk2/ODg5OC0zODMuanBn/P3NpemU9NjI2JmV4/dD1qcGc",
-      order_id: order.id,
-      handler: async function (response) {
-        alert("successfull")
-      },
-      notes: {
-        address: "Propertyhub corporate office"
-      },
-      theme: {
-        color: "#3399cc"
-      }
-    }
-    var rzp1 = new Razorpay(option);
-    rzp1.on("payment failed", function (response) {
-      alert(response.error.code)
-      alert(response.error.description)
-      alert(response.error.source)
-      alert(response.error.step)
-      alert(response.error.reason)
-      alert(response.error.metadata.order_id)
-      alert(response.error.metadata.payment_id)
-    })
-    rzp1.open();
-    event.preventDefault();
-  };
 
   return (
     <main>
@@ -167,6 +124,40 @@ export default function Listing() {
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
             </p>
+            <ul className='font-semibold'>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.villa ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.villa ? 'Villa' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.bunglow ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.bunglow ? 'Bunglow' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.townhouse ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.townhouse ? 'Townhouse' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.appartment ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.appartment ? 'Appartment' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.condominum ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.condominum ? 'Condominum' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.duplex ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.duplex ? 'Duplex' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.triplex ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.triplex ? 'Triplex' : ' '}
+              </li>
+              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.other ? 'text-green-900' : 'text-red-500'}`}>
+
+                {listing.other ? 'Other' : ' '}
+              </li>
+            </ul>
 
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap '>
@@ -191,44 +182,13 @@ export default function Listing() {
               </li>
 
 
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.villa ? 'text-green-900' : 'text-red-500'}`}>
 
-                {listing.villa ? 'Villa' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.bunglow ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.bunglow ? 'bunglow' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.townhouse ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.townhouse ? 'townhouse' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.appartment ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.appartment ? 'appartment' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.condominum ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.condominum ? 'condominum' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.duplex ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.duplex ? 'duplex' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.triplex ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.triplex ? 'triplex' : ' '}
-              </li>
-              <li className={`flex items-center gap-1 whitespace-nowrap ${listing.other ? 'text-green-900' : 'text-red-500'}`}>
-
-                {listing.other ? 'other' : ' '}
-              </li>
             </ul>
             <ul>
 
             </ul>
             <p className='text-slate-800'>
-              <span className='font-semibold text-red-500'>Fee for the Appointment - ₹<b>{listing.appointmentFees} </b></span>
+              <span className='font-semibold text-red-500'>Appointment Fee  ₹<b>{listing.appointmentFees} </b></span>
 
             </p>
             <br />
@@ -236,11 +196,7 @@ export default function Listing() {
               {contact && <Contact listing={listing} />}
               {currentUser && listing.userRef !== currentUser._id && !contact && (<AppointmentForm />)}
 
-              {currentUser && listing.userRef !== currentUser._id && !contact && (
-                <button onClick={PaymentHandler} className='text-slate-800'>
-                  <span className='bg-blue-500 text-white rounded-lg Shover:opacity-95 p-3'>Pay the AppointmentFee - ₹<b>{listing.appointmentFees} </b></span>
 
-                </button>)}
             </div>
             {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
