@@ -29,14 +29,6 @@ export default function Listing() {
   const { currentUser } = useSelector((state) => state.user);
 
 
-  // const CheckoutHandler = async (name, amount) => {
-  //   const { data: { order } } = await fetch.post("http://localhost:3001", {
-  //     name,
-  //     amount
-  //   })
-  //   console.log({ order })
-  // }
-
 
 
   useEffect(() => {

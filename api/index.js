@@ -6,38 +6,44 @@ import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
+import listing from "./models/listing.model.js";
 import Razorpay from "razorpay";
-// const Ordermodel = require("./models/order.model.js")
-dotenv.config();
-
+import cors from "cors";
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+dotenv.config();
 
 app.use(express.json());
 
-// export const instance = new Razorpay({
-//   Key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_SECRET,
-// });
+app.post("/orders", (req, res) => {
+  const { appointmentFees } = req.body;
+  var instaance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_SECRET,
+  });
+  var options = {
+    amount: 10,
+    currency: "INR",
 
-// app.get("/payment/checkout",async (req,res)=>{
-// const {name,appointmentFees}=req.body
-// const order= await Razorpay.orders.create({
-//   amount:Number((amount)*100),
-//   currency:"INR",
-//   receipt:"order_rectid_11"
-// })
-
-// await Ordermodel.create({
-//   order_id:order.id,
-//   name:name,
-//   amount:amount
-// })
-// console.log(order)
-// res.json(order)
-// })
-
-
-
+  };
+  instaance.orders.create(options, function (err, order) {
+    console.log(err)
+    if (err) {
+      return res.send({ code: 500, message: "Server error" });
+    }
+    return res.send({ code: 200, message: "Oredr created", data: order });
+  });
+});
+app.post("verify", (req, res) => {
+  res.send(verify);
+});
 
 mongoose
   .connect(process.env.MONGO)
@@ -94,7 +100,7 @@ app.post("/api/checkAvailability", async (req, res) => {
 });
 
 app.use(cookieParser());
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log("Server is running on port 3000!");
 });
 
