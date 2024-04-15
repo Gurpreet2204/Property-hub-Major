@@ -1,10 +1,9 @@
-import { useState ,useEffect} from 'react';
+// import Razorpay from 'razorpay';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-
-
+import axios from 'axios'
 const AppointmentForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -100,26 +99,55 @@ const AppointmentForm = () => {
     fetchListing();
   }, [params.listingId]);
 
-  const handlePayment = async (appointmentFees) => {
-    const _data = { appointmentFees:appointmentFees };
   
-    await fetch("http://localhost:3000/orders", {
+  const handleOpenRazorpay =(data) => {
+    const options = {
+      key: "rzp_test_0o4NhN2bWbS3HN",
+      amount: Number(data.amount),
+      currency: data.currency,
+      order_id: data.id,
+      handler: async function (response) {
+        console.log(response, "109")
+    await fetch("http://localhost:3000/api/verify",{
+      response:response
+    })
+    .then(res=>{
+      console.log(res, "112")
+    })
+    .catch((err) => {
+      console.log("Error:", err);
+    })
+   }
+
+    
+    }
+    const rzp = new window.Razorpay(options)
+    rzp.open()
+
+  }
+
+  const handlePayment = async (appointmentFees) => {
+    const _data = { appointmentFees: appointmentFees };
+
+    await fetch("http://localhost:3000/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(_data),
     })
-      .then((res) => res.json())
-      .then((data) => 
-      {
-        if (data.code === 500) {
-          console.log(`Server Error: ${data.message}`);
-        } else {
-          
-          console.log(data);
-        }
-      })
+      .then(res => res.json()
+        .then(data => {
+          if (data.code === 500) {
+            console.log(`Server error:${data.message}`)
+          }
+          else {
+            console.log(data)
+          }
+          handleOpenRazorpay(data.data)
+        })
+
+      )
       .catch((err) => {
         console.log("Error:", err);
       });
@@ -134,14 +162,14 @@ const AppointmentForm = () => {
       </button>
       {showForm && (
         <div className="max-w-md bg-white rounded-md shadow-md p-6">
-          
+
           <h2 className="text-3xl text-red-900 font-semibold mb-4">Book Your Appointment</h2>
           {submitted ? (
-            
-            <button onClick={()=> handlePayment (listing.appointmentFees)} className='text-slate-800'> 
-            <span className='bg-blue-500 text-white rounded-lg Shover:opacity-95 p-3'>Pay the AppointmentFee <b> ₹  {listing.appointmentFees} </b></span>
 
-          </button> 
+            <button onClick={() => handlePayment(listing.appointmentFees)} className='text-slate-800'>
+              <span className='bg-blue-500 text-white rounded-lg Shover:opacity-95 p-3'>Pay the AppointmentFee <b> ₹  {listing.appointmentFees} </b></span>
+
+            </button>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <label className="block">
@@ -194,7 +222,7 @@ const AppointmentForm = () => {
                   Submit Appointment Request
                 </button>
 
-              </center>  
+              </center>
 
             </form>
 
