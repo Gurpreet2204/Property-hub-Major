@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
-import 'swiper/css/bundle';
+import 'swiper/css/bundle'; 
 import ListingItem from '../components/ListingItem';
-import axios from 'axios';
+// import axios from 'axios';
 SwiperCore.use([Navigation]);
 
 const Home = () => {
@@ -16,17 +16,10 @@ const Home = () => {
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch('/api/listing/get?offer=true&limit=4', {
-          method: "GET", // Corrected method from POST to GET
-          headers: {
-            "Content-Type": "application/json"
-          },
-          // No need for body in GET request
-        });
+        const res = await fetch('/api/listing/get?offer=true&limit=4');
         const data = await res.json();
         setOfferListings(data);
-        console.log(data);
-        fetchRentListings();
+        fetchRentListings();  
       } catch (error) {
         console.log(error);
       }

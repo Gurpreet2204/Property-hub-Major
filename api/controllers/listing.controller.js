@@ -69,6 +69,11 @@ export const getListings = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     let offer = req.query.offer;
 
+    console.log('Incoming request parameters:');
+    console.log('Limit:', limit);
+    console.log('Start Index:', startIndex);
+    console.log('Offer:', offer);
+
     if (offer === undefined || offer === 'false') {
       offer = { $in: [false, true] };
     }
@@ -160,9 +165,11 @@ export const getListings = async (req, res, next) => {
       .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
-
+      console.log('Retrieved listings:', listings);
     return res.status(200).json(listings);
   } catch (error) {
+    console.error('Error in getListings:', error);
     next(error);
   }
+  
 };

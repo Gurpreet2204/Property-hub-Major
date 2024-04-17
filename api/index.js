@@ -3,41 +3,48 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Razorpay from "razorpay";
 import crypto from "crypto";
-import cors from "cors"
+import cors from "cors";
+import path from "path";
+import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
+import listingRouter from "./routes/listing.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-}));
-
+app.use(cors());
+mongoose
+  .connect(process.env.MONGO)
+  .then(() => {
+    console.log("Connected to MongoDB!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 // Mongoose Schemas
 const orderSchema = new mongoose.Schema({
   orderId: { type: String, required: true },
   amount: { type: Number, required: true },
   currency: { type: String, required: true },
   // receipt: { type: String, required: true },
-  status: { type: String, default: 'created' },
+  status: { type: String, default: "created" },
   createdAt: { type: Date, default: Date.now },
-  appointmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Appointment' },
+  appointmentId: { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 const verificationSchema = new mongoose.Schema({
   orderId: { type: String, required: true },
   paymentId: { type: String, required: true },
   signature: { type: String, required: true },
-  status: { type: String, default: 'pending' },
+  status: { type: String, default: "pending" },
   createdAt: { type: Date, default: Date.now },
 });
 
-const Verification = mongoose.model('Verification', verificationSchema);
+const Verification = mongoose.model("Verification", verificationSchema);
 
 const Appointment = mongoose.model("Appointment", {
   name: String,
@@ -56,7 +63,6 @@ app.post("/api/orders", async (req, res) => {
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_SECRET,
   });
-
   var options = {
     amount: appointmentFees * 100,
     currency: "INR",
@@ -90,7 +96,8 @@ app.post("/api/orders", async (req, res) => {
 });
 
 app.post("/api/verify", async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body.response;
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body.response;
 
   let body = razorpay_order_id + "|" + razorpay_payment_id;
   var expectedSignature = crypto
@@ -103,7 +110,7 @@ app.post("/api/verify", async (req, res) => {
       orderId: razorpay_order_id,
       paymentId: razorpay_payment_id,
       signature: razorpay_signature,
-      status: 'valid',
+      status: "valid",
     });
 
     await newVerification.save();
@@ -114,7 +121,7 @@ app.post("/api/verify", async (req, res) => {
       orderId: razorpay_order_id,
       paymentId: razorpay_payment_id,
       signature: razorpay_signature,
-      status: 'invalid',
+      status: "invalid",
     });
 
     await newVerification.save();
@@ -124,7 +131,8 @@ app.post("/api/verify", async (req, res) => {
 });
 
 app.post("/api/checkAvailability", async (req, res) => {
-  const { name, email, phone, selectedDate, selectedTime, propertyId } = req.body;
+  const { name, email, phone, selectedDate, selectedTime, propertyId } =
+    req.body;
 
   try {
     const newAppointment = new Appointment({
@@ -159,17 +167,22 @@ app.post("/api/checkAvailability", async (req, res) => {
   }
 });
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGO)
-  .then(() => {
-    console.log("Connected to MongoDB!");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-// Start the server
+app.use(cookieParser());
 app.listen(3000, () => {
   console.log("Server is running on port 3000!");
+});
+
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
+app.use((err, req, res, next) => {
+  console.log(err);
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  return res.status(statusCode).json({ success: false, statusCode, message });
 });
