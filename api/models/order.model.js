@@ -1,30 +1,11 @@
-const mongoose = require("mongoose");
-const Razorpay = require("razorpay");
-const schema = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-  amount: {
-    type: String,
-  },
-  order_id: {
-    type: String,
-  },
-  razorpay_payment_id: {
-    type: String,
-    default: null,
-  },
-  razorpay_order_id: {
-    type: String,
-    default: null,
-  },
-  razorpay_signature: {
-    type: String,
-    default: null,
-  },
+import mongoose from 'mongoose';
+
+const orderSchema = new mongoose.Schema({
+  amount: { type: Number, required: true },
+  currency: { type: String, required: true },
+  // Add other properties as needed
 });
 
-const Ordermodel= mongoose.model("order",schema)
-module.exports={
-    Ordermodel
-}
+const order = mongoose.model('Order', orderSchema);
+
+export default order

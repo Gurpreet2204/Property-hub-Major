@@ -103,12 +103,12 @@ const AppointmentForm = () => {
   const handleOpenRazorpay =(data) => {
     const options = {
       key: "rzp_test_0o4NhN2bWbS3HN",
-      amount: Number(data.amount),
+      amount: Number(data.amount)*100,
       currency: data.currency,
       order_id: data.id,
       handler: async function (response) {
         console.log(response, "109")
-    await fetch("http://localhost:3000/api/verify",{
+    await fetch("http://localhost:3001/api/verify",{
       response:response
     })
     .then(res=>{
@@ -127,9 +127,9 @@ const AppointmentForm = () => {
   }
 
   const handlePayment = async (appointmentFees) => {
-    const _data = { appointmentFees: appointmentFees };
+    const _data = { amount: appointmentFees };
 
-    await fetch("http://localhost:3000/api/orders", {
+    await fetch("http://localhost:3001/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
