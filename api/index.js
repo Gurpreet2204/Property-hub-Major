@@ -178,7 +178,9 @@ app.use("/api/listing", listingRouter);
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+
+      res.sendFile(path.join(__dirname, 'client', 'dist','index.html' ))
+
 });
 app.use((err, req, res, next) => {
   console.log(err);
