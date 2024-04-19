@@ -13,7 +13,7 @@ export default function Search() {
     offer: false,
     villa:false,
     bunglow:false,
-    appartment:false,
+    apartment:false,
     townhouse:false,
     condominum:false,
     duplex:false,
@@ -36,7 +36,7 @@ export default function Search() {
     const keywordsFromUrl = urlParams.get('keywords');
     const villaFromUrl = urlParams.get('villa');
     const bunglowFromUrl = urlParams.get('bunglow');
-    const appartmentFromUrl = urlParams.get('appartment');
+    const apartmentFromUrl = urlParams.get('apartment');
     const townhouseFromUrl = urlParams.get('townhouse');
     const condomiumFromUrl = urlParams.get('condomium');
     const duplexFromUrl = urlParams.get('duplex');
@@ -54,7 +54,7 @@ export default function Search() {
       keywordsFromUrl||
       villaFromUrl ||
       bunglowFromUrl ||
-      appartmentFromUrl ||
+      apartmentFromUrl ||
       townhouseFromUrl ||
       condomiumFromUrl ||
       duplexFromUrl ||
@@ -70,9 +70,9 @@ export default function Search() {
         parking: parkingFromUrl === 'true' ? true : false,
         furnished: furnishedFromUrl === 'true' ? true : false,
         villa: villaFromUrl === 'true' ? true : false,
-        keywords:keywordsFromUrl===' ',
+        keywords:keywordsFromUrl ||' ',
         bunglow: bunglowFromUrl === 'true' ? true : false,
-        appartment: appartmentFromUrl === 'true' ? true : false,
+        apartment: apartmentFromUrl === 'true' ? true : false,
         townhouse: townhouseFromUrl === 'true' ? true : false,
         condominum: condomiumFromUrl === 'true' ? true : false,
         duplex: duplexFromUrl === 'true' ? true : false,
@@ -107,7 +107,15 @@ export default function Search() {
       e.target.id === 'all' ||
       e.target.id === 'rent' ||
       e.target.id === 'sale'||
-      e.target.id === 'keywords'
+      e.target.id === 'keywords'||
+      e.target.id === 'bunglow' ||
+      e.target.id === 'townhouse'||
+      e.target.id === 'apartment'||
+      e.target.id === 'condominum'||
+      e.target.id === 'duplex'||
+      e.target.id === 'triplex'||
+      e.target.id === 'other'||
+      e.target.id === 'offer'
 
     ) {
       setSidebardata({ ...sidebardata, type: e.target.id });
@@ -157,7 +165,7 @@ export default function Search() {
     urlParams.set('furnished', sidebardata.furnished);
     urlParams.set('villa', sidebardata.villa);
     urlParams.set('bunglow', sidebardata.bunglow);
-    urlParams.set('appartment', sidebardata.appartment);
+    urlParams.set('apartment', sidebardata.apartment);
     urlParams.set('townhouse', sidebardata.townhouse);
     urlParams.set('condomium', sidebardata.condominum);
     urlParams.set('duplex', sidebardata.duplex);
@@ -293,12 +301,12 @@ export default function Search() {
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='appartment'
+                id='apartment'
                 className='w-5'
                 onChange={handleChange}
-                checked={sidebardata.appartment}
+                checked={sidebardata.apartment}
               />
-              <span>appartment</span>
+              <span>apartment</span>
             </div>
             <div className='flex gap-2'>
               <input

@@ -307,7 +307,7 @@ app.post(
       .digest("hex");
 
     if (expectedSignature === razorpay_signature) {
-      // Payment is valid, redirect to the home page
+    
       return res.status(200).json({ code: 200, message: "Sign valid" });
 
     } else {

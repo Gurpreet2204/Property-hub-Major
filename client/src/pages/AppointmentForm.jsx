@@ -1,6 +1,7 @@
 // import Razorpay from 'razorpay';
 import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
+import { Link } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
@@ -13,6 +14,7 @@ const AppointmentForm = () => {
   const [appointments, setAppointments] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [listing, setListing] = useState(" ");
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const params = useParams();
@@ -26,6 +28,8 @@ const AppointmentForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          name,
+          phone,
           selectedDate,
           duration: 60,
         }),
@@ -112,7 +116,10 @@ const AppointmentForm = () => {
       response:response
     })
     .then(res=>{
-      console.log(res, "112")
+      console.log(res, "112");
+      if(res.ok){
+        setPaymentSuccess(true);
+      }
     })
     .catch((err) => {
       console.log("Error:", err);
@@ -164,10 +171,13 @@ const AppointmentForm = () => {
         <div className="max-w-md bg-white rounded-md shadow-md p-6">
 
           <h2 className="text-3xl text-red-900 font-semibold mb-4">Book Your Appointment</h2>
-          {submitted ? (
-
-            <button onClick={() => handlePayment(listing.appointmentFees)} className='text-slate-800'>
-              <span className='bg-blue-500 text-white rounded-lg Shover:opacity-95 p-3'>Pay the AppointmentFee <b> ₹  {listing.appointmentFees} </b></span>
+          {paymentSuccess ? ( // Check for payment success
+            <Link to={"/profile"}><p className="text-green-700">Your appointment is submitted successfully! </p></Link>
+          ) : submitted ? (
+            <button onClick={() => handlePayment(listing.appointmentFees)} className="text-slate-800">
+              <span className="bg-blue-500 text-white rounded-lg hover:opacity-95 p-3">
+                Pay the AppointmentFee <b> ₹ {listing.appointmentFees} </b>
+              </span>
 
             </button>
           ) : (

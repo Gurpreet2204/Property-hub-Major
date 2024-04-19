@@ -27,9 +27,9 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingsError, setShowListingsError] = useState(false);
-  const [ShowAppointmentsError, setShowAppointmentsError] = useState(false);
+  const [showOrderError, setShowOrderError] = useState(false);
   const [userListings, setUserListings] = useState([]);
-  const [userAppointments, setUserAppointments] = useState([]);
+  const [userOrder, setUserOrder] = useState([]);
   const dispatch = useDispatch();
 
 
@@ -138,19 +138,19 @@ export default function Profile() {
       setShowListingsError(true);
     }
   };
-  const handleShowAppointments = async () => {
+  const handleShowOrder = async () => {
     try {
-      setShowAppointmentsError(false);
-      const res = await fetch(`/api/appointments/${currentUser._id}`);
+      setShowOrderError(false);
+      const res = await fetch(`/api/orders/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false) {
-        setShowAppointmentsError(true);
+        setShowOrderError(true);
         return;
       }
 
-      setUserAppointments(data);
+      setUserOrder(data);
     } catch (error) {
-      setShowAppointmentsError(true);
+      setShowOrderError(true);
     }
   };
 
@@ -302,43 +302,26 @@ export default function Profile() {
         </div>
       )}
 
-<button onClick={handleShowAppointments} className='text-green-700 w-full'>
-        Show Appointments
+
+      <button
+        onClick={handleShowOrder}
+        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-5"
+      >
+        Show appointments dashboard
       </button>
-      <p className='text-red-700 mt-5'>
-        {ShowAppointmentsError ? 'Error showing Appointments' : ''}
+      <p className="text-red-700 mt-5">
+        {showOrderError ? "Error showing order" : ""}
       </p>
-
-      {userAppointments && userAppointments.length > 0 && (
-        <div className='flex flex-col gap-4'>
-          <h1 className='text-center mt-7 text-2xl font-semibold'>
-            Your Appointments
-          </h1>
-          {userAppointments.map((appointment) => (
-            <div
-              key={appointment._id}
-              className='border rounded-lg p-3 flex justify-between items-center gap-4'
-            >
-              <Link to={`/api/appointments/${appointment._id}`}>
-                <img
-                  src={appointment.durations}
-                  alt='listing cover'
-                  className='h-16 w-16 object-contain'
-                />
-              </Link>
-              <Link
-                className='text-slate-700 font-semibold  hover:underline truncate flex-1'
-                to={`/appointments/${appointment._id}`}
-              >
-                <p>{appointment.date}</p>
-              </Link>
-
-            
-            </div>
-          ))}
+      
+      {userOrder.map((orders)=>(
+        <div  key={orders._id}
+        className='border rounded-lg p-3 flex justify-between items-center gap-4'>
+<p>{orders.orderId}</p>
+<p>{orders.amount}</p>
+<p>{orders.currency}</p>
+<p>{orders.createdAt}</p>
         </div>
-      )}
-
+      ))}
     </div>
   );
 }
