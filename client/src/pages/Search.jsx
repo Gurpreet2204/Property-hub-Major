@@ -13,7 +13,7 @@ export default function Search() {
     offer: false,
     villa:false,
     bunglow:false,
-    apartment:false,
+    appartment:false,
     townhouse:false,
     condominum:false,
     duplex:false,
@@ -36,9 +36,9 @@ export default function Search() {
     const keywordsFromUrl = urlParams.get('keywords');
     const villaFromUrl = urlParams.get('villa');
     const bunglowFromUrl = urlParams.get('bunglow');
-    const apartmentFromUrl = urlParams.get('apartment');
+    const appartmentFromUrl = urlParams.get('appartment');
     const townhouseFromUrl = urlParams.get('townhouse');
-    const condomiumFromUrl = urlParams.get('condomium');
+    const condomiumFromUrl = urlParams.get('condominum');
     const duplexFromUrl = urlParams.get('duplex');
     const triplexFromUrl = urlParams.get('triplex');
     const otherFromUrl = urlParams.get('other');
@@ -54,7 +54,7 @@ export default function Search() {
       keywordsFromUrl||
       villaFromUrl ||
       bunglowFromUrl ||
-      apartmentFromUrl ||
+      appartmentFromUrl ||
       townhouseFromUrl ||
       condomiumFromUrl ||
       duplexFromUrl ||
@@ -72,9 +72,9 @@ export default function Search() {
         villa: villaFromUrl === 'true' ? true : false,
         keywords:keywordsFromUrl ||' ',
         bunglow: bunglowFromUrl === 'true' ? true : false,
-        apartment: apartmentFromUrl === 'true' ? true : false,
+        appartment: appartmentFromUrl === 'true' ? true : false,
         townhouse: townhouseFromUrl === 'true' ? true : false,
-        condominum: condomiumFromUrl === 'true' ? true : false,
+        condominum: condominumFromUrl === 'true' ? true : false,
         duplex: duplexFromUrl === 'true' ? true : false,
         triplex: triplexFromUrl === 'true' ? true : false,
         other: otherFromUrl === 'true' ? true : false,
@@ -110,7 +110,7 @@ export default function Search() {
       e.target.id === 'keywords'||
       e.target.id === 'bunglow' ||
       e.target.id === 'townhouse'||
-      e.target.id === 'apartment'||
+      e.target.id === 'appartment'||
       e.target.id === 'condominum'||
       e.target.id === 'duplex'||
       e.target.id === 'triplex'||
@@ -132,7 +132,7 @@ export default function Search() {
       e.target.id === 'keywords' ||
       e.target.id === 'bunglow' ||
       e.target.id === 'townhouse'||
-      e.target.id === 'apartment'||
+      e.target.id === 'appartment'||
       e.target.id === 'condominum'||
       e.target.id === 'duplex'||
       e.target.id === 'triplex'||
@@ -165,9 +165,9 @@ export default function Search() {
     urlParams.set('furnished', sidebardata.furnished);
     urlParams.set('villa', sidebardata.villa);
     urlParams.set('bunglow', sidebardata.bunglow);
-    urlParams.set('apartment', sidebardata.apartment);
+    urlParams.set('appartment', sidebardata.appartment);
     urlParams.set('townhouse', sidebardata.townhouse);
-    urlParams.set('condomium', sidebardata.condominum);
+    urlParams.set('condominum', sidebardata.condominum);
     urlParams.set('duplex', sidebardata.duplex);
     urlParams.set('triplex', sidebardata.triplex);
     urlParams.set('other', sidebardata.other);
@@ -301,12 +301,12 @@ export default function Search() {
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='apartment'
+                id='appartment'
                 className='w-5'
                 onChange={handleChange}
-                checked={sidebardata.apartment}
+                checked={sidebardata.appartment}
               />
-              <span>apartment</span>
+              <span>appartment</span>
             </div>
             <div className='flex gap-2'>
               <input

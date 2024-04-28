@@ -13,7 +13,7 @@ import Search from './pages/Search';
 import MortgageCalculator from './pages/MortgageCalaulator';
 import BudgetInvestor from './pages/BudgetInvestor';
 import Footer from './components/Footer';
-
+import Dashboard from './pages/Dashboard'
 export default function App() {
   return (
     <BrowserRouter>
@@ -27,8 +27,11 @@ export default function App() {
         <Route path='/about' element={<About />} />
         <Route path='/search' element={<Search />} />
         <Route path='/listing/:listingId' element={<Listing />} />
+        
+
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
+          <Route path='/Dashboard' element={<Dashboard/>} />
           <Route path='/create-listing' element={<CreateListing />} />
           <Route
             path='/update-listing/:listingId'

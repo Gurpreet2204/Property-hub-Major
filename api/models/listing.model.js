@@ -63,7 +63,7 @@ const listingSchema = new mongoose.Schema(
     appartment:{
       type:Boolean,
     },
-    tounHouse:{
+    townHouse:{
       type:Boolean,
     },
     condominum:{

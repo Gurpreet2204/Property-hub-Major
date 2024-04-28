@@ -98,6 +98,10 @@ export default function Listing() {
                 : listing.regularPrice.toLocaleString('en-US')}
               {listing.type === 'rent' && ' / month'}
             </p>
+            <p className='text-slate-800'>
+              <b> <span className='font-semibold text-black'>Appointment Fee - ₹{listing.appointmentFees} </span></b>
+
+            </p>
             <p className='flex items-center mt-6 gap-2 text-slate-600 text-sm'>
               <FaMapMarkerAlt className='text-green-700' />
               {listing.address}
@@ -179,11 +183,7 @@ export default function Listing() {
             <ul>
 
             </ul>
-            <p className='text-slate-800'>
-              <span className='font-semibold text-red-500'>Appointment Fee  ₹<b>{listing.appointmentFees} </b></span>
 
-            </p>
-            <br />
             <div className='flex space-x-20'>
               {contact && <Contact listing={listing} />}
               {currentUser && listing.userRef !== currentUser._id && !contact && (<AppointmentForm />)}

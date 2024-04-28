@@ -18,6 +18,7 @@ import {
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AppointmentsDashboard from './Dashboard';
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -30,6 +31,7 @@ export default function Profile() {
   const [showOrderError, setShowOrderError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const [userOrder, setUserOrder] = useState([]);
+  const [showAppointments, setShowAppointments] = useState(false);
   const dispatch = useDispatch();
 
 
@@ -172,6 +174,9 @@ export default function Profile() {
       console.log(error.message);
     }
   };
+  const handleShowAppointments = () => {
+    setShowAppointments(true);
+  };
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -301,27 +306,14 @@ export default function Profile() {
           ))}
         </div>
       )}
-
-
-      <button
-        onClick={handleShowOrder}
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-5"
+ <Link to={'/Dashboard'}> <button 
+ className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-5"
       >
         Show appointments dashboard
-      </button>
-      <p className="text-red-700 mt-5">
-        {showOrderError ? "Error showing order" : ""}
-      </p>
-      
-      {userOrder.map((orders)=>(
-        <div  key={orders._id}
-        className='border rounded-lg p-3 flex justify-between items-center gap-4'>
-<p>{orders.orderId}</p>
-<p>{orders.amount}</p>
-<p>{orders.currency}</p>
-<p>{orders.createdAt}</p>
-        </div>
-      ))}
+      </button></Link>
+    
+      {/* {showAppointments && <AppointmentsDashboard userId={currentUser._id} />} */}
+
     </div>
   );
 }

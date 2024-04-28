@@ -119,10 +119,10 @@ export const getListings = async (req, res, next) => {
       appartment = { $in: [false, true] };
     }
 
-    let tounHouse = req.query.tounHouse;
+    let townHouse = req.query.townHouse;
 
-    if (tounHouse === undefined || tounHouse === 'false') {
-      tounHouse = { $in: [false, true] };
+    if (townHouse === undefined || townHouse === 'false') {
+      townHouse = { $in: [false, true] };
     }
 
     let condominium = req.query.condominium;
@@ -131,10 +131,15 @@ export const getListings = async (req, res, next) => {
       condominium = { $in: [false, true] };
     }
 
-    let delux = req.query.delux;
+    let duplex = req.query.duplex;
 
-    if (delux === undefined || delux === 'false') {
-      delux = { $in: [false, true] };
+    if (duplex === undefined || duplex === 'false') {
+      duplex = { $in: [false, true] };
+    }
+    let triplex = req.query.triplex;
+
+    if (triplex === undefined || triplex === 'false') {
+      triplex = { $in: [false, true] };
     }
     
     let other = req.query.other;
@@ -160,6 +165,7 @@ export const getListings = async (req, res, next) => {
       furnished,
       parking,
       type,
+     
       
     })
       .sort({ [sort]: order })
