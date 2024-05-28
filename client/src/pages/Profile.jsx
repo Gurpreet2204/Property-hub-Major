@@ -19,8 +19,11 @@ import {
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AppointmentsDashboard from './Dashboard';
+import Dashboard from './Dashboard';
+import ParentComponent from './ParentDashboard';
 export default function Profile() {
   const fileRef = useRef(null);
+  const [showDashboard, setShowDashboard] = useState(false);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
@@ -31,7 +34,7 @@ export default function Profile() {
   const [showOrderError, setShowOrderError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const [userOrder, setUserOrder] = useState([]);
-  const [showAppointments, setShowAppointments] = useState(false);
+  // const [showAppointments, setShowAppointments] = useState(false);
   const dispatch = useDispatch();
 
 
@@ -174,9 +177,125 @@ export default function Profile() {
       console.log(error.message);
     }
   };
-  const handleShowAppointments = () => {
-    setShowAppointments(true);
+  // const handleShowAppointments = () => {
+  //   setShowAppointments(true);
+  // };
+  const ordersData = [
+    {
+      _id: { $oid: '661bc5652fa49ca5d051ea05' },
+      orderId: 'order_sadfghfddgh',
+      amount: 50000,
+      currency: 'INR',
+      status: 'created',
+      createdAt: { $date: '2024-04-29T05:30:00.000+00:00' },
+      __v: 0,
+    },
+    {
+      
+        _id: {
+          $oid: "661bc5652fa49ca5d051ea05"
+        },
+        orderId: "order_Ndfsgasdfadsff",
+        amount: 10000,
+        currency: "INR",
+        status: "created",
+        createdAt: {
+         $date: "2024-04-20T12:00:37.560Z"
+        },
+        __v: 0
+      },
+      {
+        
+          _id: {
+            $oid: "661bc8a26cdd1412093e48b7"
+          },
+          orderId: "order_NyadsfgadfsoMh",
+          amount: 25000,
+          currency: "INR",
+          status: "created",
+          createdAt: {
+            $date: "2024-04-23T12:14:26.069Z"
+          },
+          __v: 0
+        
+      },
+      {
+        _id: {
+          $oid: "661bc7452fa49ca5d051ea07"
+        },
+        orderId: "order_dasdasclhoVw1k",
+        amount: 100000,
+        currency: "INR",
+        status: "created",
+        createdAt: {
+          $date: "2024-04-29T12:08:37.564Z"
+        },
+        __v: 0
+      },
+   
+  ];
+
+  const appointmentsData = [
+    {
+      _id: {
+      $oid: "sdfghfdrsdfgdsbv"
+      },
+      name: "Jasspreet singh",
+      phone: "9892827238",
+      date: {
+      $date: "2024-05-10T00:30:00.000Z"
+      },
+      __v: 0
+    },{
+      _id: {
+      $oid: "q3w4e5rtygtyty67"
+      },
+      name: "gurpreet singh",
+      phone: "7814559434",
+      date: {
+      $date: "2024-04-29T00:30:00.000Z"
+      },
+      __v: 0
+    },
+    {
+      _id: {
+      $oid: "dsffgdgdgb"
+      },
+      name: "gurpreet singh",
+      phone: "7814559434",
+      date: {
+      $date: "2024-05-02T00:30:00.000Z"
+      },
+      __v: 0
+    },{
+      _id: {
+      $oid: "6622034fb96de2d4f7f3f162"
+      },
+      name: "Karanjeeet Singh ",
+      phone: "1234567890",
+      date: {
+      $date: "2024-04-19T06:00:00.789Z"
+      },
+      __v: 0
+    },
+    {
+      _id: {
+        $oid: "66216f9528511343ee693365"
+      },
+      name: "hensvir singh",
+      phone: "1234567890",
+      date: {
+        $date: "2024-04-17T19:30:00.000Z"
+      },
+      __v: 0
+    }
+  ];
+
+
+  const toggleDashboard = () => {
+    setShowDashboard(!showDashboard);
   };
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -306,13 +425,13 @@ export default function Profile() {
           ))}
         </div>
       )}
- <Link to={'/Dashboard'}> <button 
- className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none mt-5"
-      >
-        Show appointments dashboard
-      </button></Link>
-    
-      {/* {showAppointments && <AppointmentsDashboard userId={currentUser._id} />} */}
+
+
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+     onClick={toggleDashboard}>My Appointments Dashboard</button>
+      {showDashboard && <Dashboard orders={ordersData} appointments={appointmentsData} />}
+
+
 
     </div>
   );

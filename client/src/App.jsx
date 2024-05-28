@@ -14,6 +14,7 @@ import MortgageCalculator from './pages/MortgageCalaulator';
 import BudgetInvestor from './pages/BudgetInvestor';
 import Footer from './components/Footer';
 import Dashboard from './pages/Dashboard'
+import ParentComponent from './pages/ParentDashboard';
 export default function App() {
   return (
     <BrowserRouter>
@@ -32,6 +33,7 @@ export default function App() {
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/Dashboard' element={<Dashboard/>} />
+          <Route path='/ParentComponent' element={<ParentComponent/>} />
           <Route path='/create-listing' element={<CreateListing />} />
           <Route
             path='/update-listing/:listingId'
